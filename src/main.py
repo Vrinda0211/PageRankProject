@@ -44,3 +44,11 @@ def prob_mat(A):
 A,nodes=adj_mat(graph)
 M=prob_mat(A)
 print("Stochastic matrix:\n",M)
+
+def damping(M,d=0.85):
+    n=M.shape[0]
+    E=np.ones((n,n))/n
+    G=d*M+(1-d)*E
+    return G
+G=damping(M)
+print("Damped Matrix:\n",G)
