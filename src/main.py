@@ -52,3 +52,19 @@ def damping(M,d=0.85):
     return G
 G=damping(M)
 print("Damped Matrix:\n",G)
+
+def pagerank(G,max=100,tol=1e-6):
+    n=G.shape[0]
+    r=np.ones(n)/n
+    for iteration in range(max):
+        rnew=G@r
+        if np.linalg.norm(rnew-r)<tol:
+            print(f"Converged in {iteration} iterations")
+            break
+        r=rnew
+    return r
+
+ranks=pagerank(G)
+print("PageRank Scores:")
+for node,score in zip(nodes,ranks):
+    print(f"{node}: {score:.4f}")
