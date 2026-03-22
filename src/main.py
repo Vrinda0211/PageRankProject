@@ -30,3 +30,17 @@ def adj_mat(graph):
                 i=index[link]
                 A[i][j]=1
     return A,nodes
+
+def prob_mat(A):
+    n=A.shape[0]
+    M=np.zeros((n,n))
+    for j in range(n):
+        col_sum=np.sum(A[:,j])
+        if col_sum==0:
+            M[:,j]=1/n
+        else:
+            M[:,j]=A[:,j]/col_sum
+    return M
+A,nodes=adj_mat(graph)
+M=prob_mat(A)
+print("Stochastic matrix:\n",M)
