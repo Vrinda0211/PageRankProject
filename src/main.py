@@ -65,9 +65,11 @@ def pagerank(G,max=100,tol=1e-6):
     return r
 
 ranks=pagerank(G)
-print("PageRank Scores:")
-for node,score in zip(nodes,ranks):
-    print(f"{node}: {score:.4f}")
+print("\nPageRank Results(Highest to Lowest):\n")
+ranked_pages=list(zip(nodes, ranks))
+ranked_pages.sort(key=lambda x:x[1],reverse=True)
+for i,(node,score) in enumerate(ranked_pages,start=1):
+    print(f"{i}.{node}->{score:.4f}")
 
 def visualize(graph,ranks):
     Gnx=nx.DiGraph()
