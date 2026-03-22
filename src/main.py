@@ -56,15 +56,18 @@ print("Damped Matrix:\n",G)
 def pagerank(G,max=100,tol=1e-6):
     n=G.shape[0]
     r=np.ones(n)/n
+    history=[]
     for iteration in range(max):
         rnew=G@r
+        history.append(rnew.copy())
         if np.linalg.norm(rnew-r)<tol:
             print(f"Converged in {iteration} iterations")
             break
         r=rnew
-    return r
+    return r,history
 
-ranks=pagerank(G)
+ranks,history=pagerank(G)
+
 print("\nPageRank Results(Highest to Lowest):\n")
 ranked_pages=list(zip(nodes, ranks))
 ranked_pages.sort(key=lambda x:x[1],reverse=True)
@@ -91,3 +94,19 @@ def visualize(graph,ranks):
     plt.show()
 
 visualize(graph,ranks)
+
+def plot_convergence(history,nodes):
+    history=np.array(history)
+    for i in range(len(nodes)):
+        plt.plot(history[:,i],label=nodes[i])
+
+    plt.xlabel("Iteration")
+    plt.ylabel("Rank Value")
+    plt.title("PageRank Convergence")
+    plt.legend()
+    plt.grid()
+
+    plt.savefig("demo/convergence_plot.png")
+    plt.show()
+
+plot_convergence(history, nodes)
