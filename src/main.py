@@ -87,6 +87,7 @@ def visualize(graph,ranks):
         arrows=True
     )
     plt.title("PageRank Visualization")
+    plt.savefig("demo/pagerank_graph.png")
     plt.show()
 
 visualize(graph,ranks)
