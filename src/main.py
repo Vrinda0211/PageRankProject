@@ -68,3 +68,23 @@ ranks=pagerank(G)
 print("PageRank Scores:")
 for node,score in zip(nodes,ranks):
     print(f"{node}: {score:.4f}")
+
+def visualize(graph,ranks):
+    Gnx=nx.DiGraph()
+    for node,links in graph.items():
+        for link in links:
+            Gnx.add_edge(node,link)
+    sizes=[ranks[i]*3000 for i in range(len(ranks))]
+    pos=nx.spring_layout(Gnx)
+    nx.draw(
+        Gnx,
+        pos,
+        with_labels=True,
+        node_size=sizes,
+        node_color="pink",
+        arrows=True
+    )
+    plt.title("PageRank Visualization")
+    plt.show()
+
+visualize(graph,ranks)
